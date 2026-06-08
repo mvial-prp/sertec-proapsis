@@ -8,25 +8,23 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --or: #E87722; --dk: #1a1a1a; --bd: #ddd; --tx: #333; --re: #c0392b; --gn: #27ae60; --bl: #2980b9; --gr: #4a4a4a; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #efefef; color: var(--tx); }
-
-/* ── HEADER ── */
-.hdr { background: var(--dk); color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; }
-.logo { font-weight: 800; font-size: 18px; color: var(--or); letter-spacing: 1px; }
+.hdr { background: var(--dk); color: #fff; padding: 10px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; }
+.logo { font-weight: 800; font-size: 16px; color: var(--or); letter-spacing: 1px; white-space: nowrap; }
 .logo span { color: #fff; font-weight: 300; }
 .hdr-sub { font-size: 11px; color: #aaa; }
-.dots { margin-left: auto; display: flex; gap: 6px; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+.hdr-tabs { margin-left: auto; display: flex; gap: 0; }
+.hdr-tab { padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: #aaa; border-bottom: 2px solid transparent; white-space: nowrap; }
+.hdr-tab.active { color: var(--or); border-bottom-color: var(--or); }
+.dots { display: flex; gap: 5px; margin-left: 8px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #555; }
 .dot.on { background: var(--or); } .dot.ok { background: var(--gn); }
 
-/* ── SCREENS ── */
 .scr { display: none; padding: 16px; max-width: 600px; margin: 0 auto; }
 .scr.act { display: block; }
 
-/* ── CARDS ── */
 .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 .ctitle { font-size: 12px; font-weight: 700; color: var(--or); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
 
-/* ── FIELDS ── */
 .f { margin-bottom: 12px; }
 .f label { display: block; font-size: 11px; font-weight: 700; color: #777; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .3px; }
 .f input, .f select, .f textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--bd); border-radius: 8px; font-size: 15px; color: var(--tx); background: #fff; -webkit-appearance: none; appearance: none; }
@@ -35,7 +33,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .frow .f { margin-bottom: 0; }
 
-/* ── SMART SELECT ── */
+/* Smart Select */
 .ss { position: relative; }
 .ss-btn { width: 100%; padding: 10px 32px 10px 12px; border: 1.5px solid var(--bd); border-radius: 8px; font-size: 15px; background: #fff; cursor: pointer; text-align: left; color: #aaa; position: relative; }
 .ss-btn.v { color: var(--tx); }
@@ -60,128 +58,101 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .ss-ok { background: var(--or); color: #fff; }
 .ss-cancel { background: #fff; color: #888; border: 1px solid var(--bd) !important; }
 
-/* ── EQUIPO ── */
 .eq-card { background: #fff; border: 1.5px solid var(--bd); border-radius: 10px; padding: 14px; margin-bottom: 12px; position: relative; }
 .eq-num { font-size: 11px; font-weight: 700; color: var(--or); text-transform: uppercase; margin-bottom: 10px; }
-.eq-del { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ccc; font-size: 20px; cursor: pointer; line-height: 1; }
+.eq-del { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ccc; font-size: 20px; cursor: pointer; }
 .eq-del:hover { color: var(--re); }
 
-/* ── BUTTONS ── */
 .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
 .btn-or { background: var(--or); color: #fff; }
 .btn-out { background: #fff; color: var(--or); border: 2px solid var(--or); }
 .btn-gn { background: var(--gn); color: #fff; }
+.btn-dk { background: #333; color: #fff; }
 .btn-sm { width: auto; padding: 8px 16px; font-size: 13px; border-radius: 8px; }
 .btn-add { background: #fff5ee; color: var(--or); border: 2px dashed var(--or); margin-bottom: 14px; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
 
-/* ── FOTOS ── */
 .foto-area { border: 2px dashed var(--bd); border-radius: 8px; padding: 16px; text-align: center; cursor: pointer; }
 .foto-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 10px; }
 .foto-th { position: relative; aspect-ratio: 1; border-radius: 6px; overflow: hidden; }
 .foto-th img { width: 100%; height: 100%; object-fit: cover; }
 .foto-th button { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,.55); color: #fff; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 11px; cursor: pointer; }
 
-/* ── FIRMA ── */
 .sig-wrap { position: relative; }
 canvas.sig { width: 100%; height: 180px; border: 2px solid var(--bd); border-radius: 8px; background: #fafafa; touch-action: none; cursor: crosshair; display: block; }
 canvas.sig.ok { border-color: var(--gn); }
 .sig-hint { font-size: 12px; color: #aaa; text-align: center; margin-top: 4px; }
 .sig-clr { position: absolute; top: 6px; right: 6px; background: rgba(255,255,255,.9); border: 1px solid #ddd; color: #888; font-size: 11px; padding: 3px 8px; border-radius: 6px; cursor: pointer; }
 
-/* ── NAV ── */
 .prog { height: 4px; background: #e8e8e8; border-radius: 2px; margin-bottom: 16px; }
 .prog-fill { height: 100%; background: var(--or); border-radius: 2px; transition: width .4s; }
-.stitle { font-size: 22px; font-weight: 800; color: var(--dk); margin-bottom: 4px; }
+.stitle { font-size: 20px; font-weight: 800; color: var(--dk); margin-bottom: 4px; }
 .ssub { font-size: 14px; color: #888; margin-bottom: 16px; }
 .nav { display: flex; gap: 10px; margin-top: 8px; padding-bottom: 28px; }
 
-/* ── MODAL ── */
+/* Oficina */
+.filtro-btn { padding: 6px 12px; border-radius: 20px; border: 1.5px solid var(--bd); font-size: 12px; cursor: pointer; background: #fff; color: var(--tx); }
+.filtro-btn.active { background: var(--or); color: #fff; border-color: var(--or); }
+.rep-card { background: #fff; border-radius: 10px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.07); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.rep-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,.12); }
+.rc-acta { font-weight: 800; font-size: 15px; }
+.rc-sub { font-size: 12px; color: #888; margin-top: 2px; }
+.badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.est-Borrador { background: #fff3e0; color: #e65100; }
+.est-Pendiente { background: #e3f2fd; color: #1565c0; }
+.est-Aprobado { background: #e8f5e9; color: #2e7d32; }
+
+/* Modal */
 .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 300; align-items: center; justify-content: center; padding: 20px; }
 .modal.open { display: flex; }
 .mbox { background: #fff; border-radius: 16px; padding: 28px; text-align: center; max-width: 360px; width: 100%; }
 .mico { font-size: 48px; margin-bottom: 8px; }
 .mtit { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
-.macta { font-size: 30px; font-weight: 900; color: var(--or); margin: 10px 0; }
+.macta { font-size: 28px; font-weight: 900; color: var(--or); margin: 10px 0; }
 .msub { font-size: 14px; color: #888; margin-bottom: 20px; line-height: 1.5; }
 .mbtns { display: flex; flex-direction: column; gap: 10px; }
 
-/* ── PDF OVERLAY ── */
-#pdfOverlay {
-  display: none; position: fixed; inset: 0; background: #1a1a1a;
-  z-index: 500; flex-direction: column; overflow-y: auto;
-}
-.pdf-toolbar {
-  background: #111; padding: 10px 16px; display: flex; align-items: center;
-  justify-content: space-between; position: sticky; top: 0; z-index: 10; flex-shrink: 0;
-}
+/* PDF */
+#pdfOverlay { display: none; position: fixed; inset: 0; background: #1a1a1a; z-index: 500; flex-direction: column; overflow-y: auto; }
+.pdf-toolbar { background: #111; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; flex-shrink: 0; }
 .pdf-toolbar span { color: #fff; font-weight: 700; font-size: 14px; }
 .pdf-toolbar-btns { display: flex; gap: 8px; }
 .pdf-toolbar button { padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; }
 .btn-print { background: var(--or); color: #fff; }
 .btn-close-pdf { background: #444; color: #fff; }
 
-/* ── PDF DOCUMENT STYLES ── */
-#pdfDoc {
-  width: 210mm; min-height: 297mm; margin: 16px auto;
-  background: #fff; font-family: 'Arial', sans-serif;
-  font-size: 9pt; color: #333;
-  box-shadow: 0 4px 24px rgba(0,0,0,.4);
-}
+#pdfDoc { width: 210mm; min-height: 297mm; margin: 16px auto; background: #fff; font-family: Arial, sans-serif; font-size: 9pt; color: #333; box-shadow: 0 4px 24px rgba(0,0,0,.4); }
 .pdf-hdr { background: #1a1a1a; padding: 10mm 14mm 8mm; display: flex; justify-content: space-between; align-items: flex-start; }
-.pdf-logo-text { }
-.pdf-logo-text .pro { color: #E87722; font-size: 22pt; font-weight: 900; letter-spacing: 1px; }
-.pdf-logo-text .apsis { color: #fff; font-size: 22pt; font-weight: 900; letter-spacing: 1px; }
+.pdf-logo-text .pro { color: #E87722; font-size: 22pt; font-weight: 900; }
+.pdf-logo-text .apsis { color: #fff; font-size: 22pt; font-weight: 900; }
 .pdf-logo-text .sub { color: #aaa; font-size: 7pt; letter-spacing: 2px; margin-top: 2px; }
 .pdf-acta-box { background: #E87722; border-radius: 4px; padding: 6px 10px; text-align: right; }
 .pdf-acta-box .lbl { color: rgba(255,255,255,.8); font-size: 7pt; font-weight: 700; letter-spacing: 1px; }
 .pdf-acta-box .num { color: #fff; font-size: 14pt; font-weight: 900; }
-.pdf-tipo-bar { background: #fff; border-left: 5px solid #E87722; margin: 0 14mm; padding: 5px 8px; font-size: 10pt; font-weight: 800; color: #1a1a1a; letter-spacing: .5px; margin-top: -1px; }
+.pdf-tipo-bar { border-left: 5px solid #E87722; margin: 0 14mm; padding: 5px 8px; font-size: 10pt; font-weight: 800; color: #1a1a1a; }
 .pdf-body { padding: 5mm 14mm 10mm; }
-.pdf-section-hdr { background: #E87722; color: #fff; font-size: 9pt; font-weight: 800; padding: 4px 8px; margin: 6mm 0 3mm; letter-spacing: .5px; }
+.pdf-sec { background: #E87722; color: #fff; font-size: 9pt; font-weight: 800; padding: 4px 8px; margin: 6mm 0 3mm; }
 .pdf-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
 .pdf-table td { padding: 4px 6px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
-.pdf-table .lbl { font-weight: 700; color: #666; width: 28%; white-space: nowrap; }
-.pdf-table .val { color: #222; }
+.pdf-table .lbl { font-weight: 700; color: #666; width: 28%; }
 .pdf-table tr:nth-child(odd) { background: #f9f9f9; }
 .pdf-eq-hdr { background: #4a4a4a; color: #fff; font-size: 8pt; font-weight: 700; padding: 3px 6px; margin: 4mm 0 2mm; }
 .pdf-detalle { font-size: 8.5pt; color: #333; line-height: 1.6; padding: 2mm 0; white-space: pre-wrap; }
-.pdf-fotos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 3mm; }
-.pdf-foto { width: 100%; }
+.pdf-fotos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 5mm; margin-top: 3mm; }
 .pdf-foto img { width: 100%; height: 42mm; object-fit: cover; border-radius: 2px; display: block; }
-.pdf-foto .caption { font-size: 7pt; color: #888; font-style: italic; text-align: center; margin-top: 2px; }
+.pdf-foto .cap { font-size: 7pt; color: #888; font-style: italic; text-align: center; margin-top: 2px; }
 .pdf-firmas { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 8mm; }
-.pdf-firma-box { }
-.pdf-firma-box .flbl { font-size: 8pt; font-weight: 700; color: #666; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 2mm; }
+.pdf-firma-box .flbl { font-size: 8pt; font-weight: 700; color: #666; text-transform: uppercase; margin-bottom: 2mm; }
 .pdf-firma-box img { width: 100%; height: 28mm; object-fit: contain; border-bottom: 2px solid #E87722; background: #fafafa; display: block; }
 .pdf-firma-box .fname { font-size: 8.5pt; color: #333; margin-top: 2mm; font-weight: 600; }
-.pdf-footer { background: #E87722; padding: 3mm 14mm; display: flex; justify-content: space-between; align-items: center; margin-top: 4mm; }
+.pdf-footer { background: #E87722; padding: 3mm 14mm; display: flex; justify-content: space-between; margin-top: 4mm; }
 .pdf-footer span { color: #fff; font-size: 7pt; }
-
-/* ── PRINT ── */
 @media print {
   body > *:not(#pdfOverlay) { display: none !important; }
   #pdfOverlay { position: static !important; background: none !important; overflow: visible !important; }
   .pdf-toolbar { display: none !important; }
   #pdfDoc { margin: 0 !important; box-shadow: none !important; width: 100% !important; }
 }
-
-/* ── OFICINA ── */
-.filtro-btn { padding:6px 12px;border-radius:20px;border:1.5px solid var(--bd);font-size:13px;cursor:pointer;background:#fff;color:var(--tx); }
-.filtro-btn.active { background:var(--or);color:#fff;border-color:var(--or); }
-.reporte-card { background:#fff;border-radius:10px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:box-shadow .15s; }
-.reporte-card:hover { box-shadow:0 3px 12px rgba(0,0,0,.12); }
-.reporte-card .rc-left { flex:1; }
-.reporte-card .rc-acta { font-weight:800;font-size:15px;color:var(--dk); }
-.reporte-card .rc-sub { font-size:12px;color:#888;margin-top:2px; }
-.estado-badge { padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap; }
-.est-Borrador { background:#fff3e0;color:#e65100; }
-.est-Pendiente { background:#e3f2fd;color:#1565c0; }
-.est-Aprobado { background:#e8f5e9;color:#2e7d32; }
-
-/* ── HEADER TABS ── */
-.hdr-tabs { display:flex;gap:0; }
-.hdr-tab { padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#aaa;border-bottom:2px solid transparent; }
-.hdr-tab.active { color:var(--or);border-bottom-color:var(--or); }
 </style>
 </head>
 <body>
@@ -192,13 +163,28 @@ canvas.sig.ok { border-color: var(--gn); }
     <div class="hdr-sub" id="hdrSub">Nuevo reporte</div>
   </div>
   <div class="hdr-tabs">
-    <button class="hdr-tab" onclick="goToOficina()">📋 Reportes</button>
-    <button class="hdr-tab active" onclick="goTo(1)">➕ Nuevo</button>
+    <button class="hdr-tab" id="tabReportes" onclick="goToOficina()">📋 Reportes</button>
+    <button class="hdr-tab active" id="tabNuevo" onclick="goTo(1)">➕ Nuevo</button>
   </div>
   <div class="dots" id="dots"></div>
 </div>
 
-<!-- S1 -->
+<!-- S0: LISTA REPORTES -->
+<div class="scr" id="s0">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div class="stitle" style="margin:0">Reportes</div>
+    <button class="btn btn-or btn-sm" onclick="goTo(1)">+ Nuevo</button>
+  </div>
+  <div id="filtroEstado" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    <button class="filtro-btn active" data-estado="">Todos</button>
+    <button class="filtro-btn" data-estado="Borrador">Borrador</button>
+    <button class="filtro-btn" data-estado="Pendiente">Pendiente</button>
+    <button class="filtro-btn" data-estado="Aprobado">Aprobado</button>
+  </div>
+  <div id="listaReportes"><div style="text-align:center;padding:32px;color:#aaa">Cargando...</div></div>
+</div>
+
+<!-- S1: DATOS GENERALES -->
 <div class="scr act" id="s1">
   <div class="prog"><div class="prog-fill" style="width:25%"></div></div>
   <div class="stitle">Datos Generales</div>
@@ -212,7 +198,7 @@ canvas.sig.ok { border-color: var(--gn); }
     </div>
   </div>
   <div class="card">
-    <div class="ctitle">🏭 Cliente <span class="tag">↔ Sheets</span></div>
+    <div class="ctitle">🏭 Cliente</div>
     <div class="f"><label>Razón Social</label><div id="m-cliente"></div></div>
     <div class="f"><label>Planta</label><div id="m-planta"></div></div>
     <div class="f"><label>Solicitado por</label><div id="m-contacto"></div></div>
@@ -221,7 +207,7 @@ canvas.sig.ok { border-color: var(--gn); }
   <div class="nav"><button class="btn btn-or" onclick="goTo(2)">Continuar →</button></div>
 </div>
 
-<!-- S2 -->
+<!-- S2: EQUIPOS -->
 <div class="scr" id="s2">
   <div class="prog"><div class="prog-fill" style="width:50%"></div></div>
   <div class="stitle">Equipos & Tiempos</div>
@@ -241,7 +227,7 @@ canvas.sig.ok { border-color: var(--gn); }
   </div>
 </div>
 
-<!-- S3 -->
+<!-- S3: TRABAJO -->
 <div class="scr" id="s3">
   <div class="prog"><div class="prog-fill" style="width:75%"></div></div>
   <div class="stitle">Trabajo Realizado</div>
@@ -266,7 +252,7 @@ canvas.sig.ok { border-color: var(--gn); }
   </div>
 </div>
 
-<!-- S4 -->
+<!-- S4: FIRMAS -->
 <div class="scr" id="s4">
   <div class="prog"><div class="prog-fill" style="width:100%"></div></div>
   <div class="stitle">Firmas</div>
@@ -294,30 +280,15 @@ canvas.sig.ok { border-color: var(--gn); }
   </div>
 </div>
 
-<!-- MODO OFICINA -->
-<div class="scr" id="s0">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="stitle" style="margin:0">Reportes</div>
-    <button class="btn btn-or btn-sm" onclick="goTo(1)">+ Nuevo</button>
-  </div>
-  <div id="filtroEstado" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
-    <button class="filtro-btn active" data-estado="">Todos</button>
-    <button class="filtro-btn" data-estado="Borrador">Borrador</button>
-    <button class="filtro-btn" data-estado="Pendiente">Pendiente aprobación</button>
-    <button class="filtro-btn" data-estado="Aprobado">Aprobado</button>
-  </div>
-  <div id="listaReportes"><div style="text-align:center;padding:32px;color:#aaa">Cargando reportes...</div></div>
-</div>
-
-<!-- MODO OFICINA DETALLE -->
+<!-- S_OFICINA: DETALLE REPORTE -->
 <div class="scr" id="s_oficina">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
     <button class="btn btn-out btn-sm" onclick="goToOficina()">← Volver</button>
-    <div>
+    <div style="flex:1">
       <div class="stitle" style="margin:0;font-size:18px" id="of_acta"></div>
       <div style="font-size:12px;color:#888" id="of_info"></div>
     </div>
-    <span id="of_badge" style="margin-left:auto;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700"></span>
+    <span id="of_badge" class="badge"></span>
   </div>
   <div id="of_equipos_wrap"></div>
   <div class="card">
@@ -325,7 +296,7 @@ canvas.sig.ok { border-color: var(--gn); }
     <div class="f"><textarea id="of_recom" rows="3" placeholder="Recomendaciones al cliente..."></textarea></div>
   </div>
   <div class="card">
-    <div class="ctitle">📸 Fotos adicionales</div>
+    <div class="ctitle">📸 Fotos</div>
     <div class="foto-area" id="of_fotoArea">
       <input type="file" id="of_fotoInput" accept="image/*" multiple style="display:none">
       <div style="font-size:24px">📷</div>
@@ -340,11 +311,11 @@ canvas.sig.ok { border-color: var(--gn); }
 <div class="modal" id="modal">
   <div class="mbox">
     <div class="mico">✅</div>
-    <div class="mtit">Reporte listo</div>
+    <div class="mtit">Reporte guardado</div>
     <div class="macta" id="actaLabel"></div>
-    <div class="msub">Reporte generado. Revisa el PDF y luego imprímelo o guárdalo.</div>
+    <div class="msub">Reporte en estado Borrador. Completa el detalle desde la oficina.</div>
     <div class="mbtns">
-      <button class="btn btn-or" id="btnVerPDF">📄 Ver Reporte PDF</button>
+      <button class="btn btn-or" id="btnVerPDF">📄 Ver PDF</button>
       <button class="btn btn-out" id="btnNuevo">Nuevo reporte</button>
     </div>
   </div>
@@ -363,56 +334,51 @@ canvas.sig.ok { border-color: var(--gn); }
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// DB
-// ══════════════════════════════════════════════
 const API = 'https://script.google.com/macros/s/AKfycbyz3LaKOfCcJtqY_QO_dNkWjc5hcdC9CwTy5a96Aw_6tLqaRiIeh4_gmGjVyKzAOeV-6w/exec';
 
-const DB = {
-  tecnicos: [],
-  clientes: {}
-};
+// ══════════════════════════
+// DB
+// ══════════════════════════
+const DB = { tecnicos: [], clientes: {} };
 
 async function loadDB() {
   try {
     const r = await fetch(API + '?action=getDB');
     const data = await r.json();
-    if (!data.ok) return;
-    // Técnicos
+    if (!data.ok) throw new Error('API error');
     DB.tecnicos = data.tecnicos;
-    // Reconstruir estructura clientes
     DB.clientes = {};
     data.clientes.forEach(({cliente, planta, contacto}) => {
       if (!DB.clientes[cliente]) DB.clientes[cliente] = {};
-      if (!DB.clientes[cliente][planta]) DB.clientes[cliente][planta] = { contactos: [], equipos: [] };
+      if (!DB.clientes[cliente][planta]) DB.clientes[cliente][planta] = {contactos:[], equipos:[]};
       if (contacto && !DB.clientes[cliente][planta].contactos.includes(contacto))
         DB.clientes[cliente][planta].contactos.push(contacto);
     });
     data.equipos.forEach(({cliente, planta, equipo}) => {
-      if (DB.clientes[cliente]?.[planta])
+      if (DB.clientes[cliente]?.[planta] && !DB.clientes[cliente][planta].equipos.includes(equipo))
         DB.clientes[cliente][planta].equipos.push(equipo);
     });
   } catch(e) {
-    console.warn('No se pudo cargar DB desde Sheets, usando datos locales.', e);
     // Fallback local
     DB.tecnicos = ['Matías Chamorro','Juan Pérez','Carlos Soto','Felipe Rojas','Andrés Muñoz'];
     DB.clientes = {
-      'DVP': { 'Planta Inyección': { contactos:['Carlos Padilla'], equipos:['Prime Rhea 05941','Prime Rhea 05714','Yaskawa GP180'] } },
-      'Watts': { 'Frutos del Maipo': { contactos:['Javier Morales'], equipos:['Robot Paletizador A1'] } }
+      'DVP': { 'Planta Inyección': {contactos:['Carlos Padilla'], equipos:['Prime Rhea 05941','Prime Rhea 05714','Yaskawa GP180']} },
+      'Watts': { 'Frutos del Maipo': {contactos:['Javier Morales'], equipos:['Robot Paletizador A1']} },
+      'Wenco': { 'Planta 5 Lampa': {contactos:['Diego Fuentes'], equipos:['Campetella BFB2']} }
     };
   }
 }
 
 async function postAPI(body) {
-  const r = await fetch(API, { method:'POST', body: JSON.stringify(body) });
+  const r = await fetch(API, {method:'POST', body:JSON.stringify(body)});
   return r.json();
 }
 
-// ══════════════════════════════════════════════
+// ══════════════════════════
 // SmartSelect
-// ══════════════════════════════════════════════
+// ══════════════════════════
 class SS {
-  constructor(mountEl, { placeholder, label, getItems, onSelect, onAdd }) {
+  constructor(mountEl, {placeholder, label, getItems, onSelect, onAdd}) {
     this.mount = typeof mountEl==='string' ? document.getElementById(mountEl) : mountEl;
     this.ph=placeholder; this.label=label; this.getItems=getItems; this.onSelect=onSelect; this.onAdd=onAdd;
     this.value=''; this._build();
@@ -439,7 +405,12 @@ class SS {
     si.addEventListener('input',()=>this._rl(si.value));
     addBtn.addEventListener('click',()=>{this.close();np.classList.add('open');ni.focus();});
     cx.addEventListener('click',()=>{np.classList.remove('open');ni.value='';});
-    ok.addEventListener('click',()=>{const v=ni.value.trim();if(!v)return;this.onAdd?.(v);np.classList.remove('open');ni.value='';this.select(v);});
+    ok.addEventListener('click',()=>{
+      const v=ni.value.trim(); if(!v) return;
+      this.onAdd?.(v);
+      np.classList.remove('open'); ni.value='';
+      this.select(v);
+    });
     ni.addEventListener('keydown',e=>{if(e.key==='Enter')ok.click();});
     this._rl('');
   }
@@ -460,29 +431,54 @@ class SS {
 }
 document.addEventListener('click',()=>document.querySelectorAll('.ss-drop.open').forEach(el=>el.classList.remove('open')));
 
-// ══════════════════════════════════════════════
+// ══════════════════════════
 // STATE
-// ══════════════════════════════════════════════
+// ══════════════════════════
 let cur=1, eqList=[], eqIdx=0, fotos=[], actaActual='';
+let of_fotos=[], reporteActual=null, filtroActivo='';
 const sel={cliente:'',planta:''};
 let ssMap={};
 
+// ══════════════════════════
+// SELECTS
+// ══════════════════════════
 function initSelects() {
-  ssMap.tecnico=new SS('m-tecnico',{placeholder:'Seleccionar técnico...',label:'técnico',getItems:()=>DB.tecnicos,onAdd:v=>DB.tecnicos.push(v)});
-  ssMap.cliente=new SS('m-cliente',{placeholder:'Seleccionar cliente...',label:'cliente',getItems:()=>Object.keys(DB.clientes),
+  ssMap.tecnico=new SS('m-tecnico',{placeholder:'Seleccionar técnico...',label:'técnico',
+    getItems:()=>DB.tecnicos,
+    onAdd:v=>{DB.tecnicos.push(v);postAPI({action:'agregarMaestro',tipo:'tecnico',nombre:v});}
+  });
+  ssMap.cliente=new SS('m-cliente',{placeholder:'Seleccionar cliente...',label:'cliente',
+    getItems:()=>Object.keys(DB.clientes),
     onSelect:v=>{sel.cliente=v;sel.planta='';ssMap.planta?.reset('Seleccionar planta...');ssMap.contacto?.reset('Seleccionar contacto...');},
-    onAdd:v=>{DB.clientes[v]={};}});
-  ssMap.planta=new SS('m-planta',{placeholder:'Seleccionar planta...',label:'planta',getItems:()=>sel.cliente?Object.keys(DB.clientes[sel.cliente]||{}):[],
+    onAdd:v=>{DB.clientes[v]={};postAPI({action:'agregarMaestro',tipo:'cliente',cliente:v});}
+  });
+  ssMap.planta=new SS('m-planta',{placeholder:'Seleccionar planta...',label:'planta',
+    getItems:()=>sel.cliente?Object.keys(DB.clientes[sel.cliente]||{}):[],
     onSelect:v=>{sel.planta=v;ssMap.contacto?.reset('Seleccionar contacto...');},
-    onAdd:v=>{if(sel.cliente){if(!DB.clientes[sel.cliente])DB.clientes[sel.cliente]={};DB.clientes[sel.cliente][v]={contactos:[],equipos:[]};sel.planta=v;}}});
+    onAdd:v=>{
+      if(!sel.cliente)return;
+      if(!DB.clientes[sel.cliente])DB.clientes[sel.cliente]={};
+      DB.clientes[sel.cliente][v]={contactos:[],equipos:[]};
+      sel.planta=v;
+      postAPI({action:'agregarMaestro',tipo:'cliente',cliente:sel.cliente,planta:v});
+    }
+  });
   ssMap.contacto=new SS('m-contacto',{placeholder:'Seleccionar contacto...',label:'contacto',
-    getItems:()=>(sel.cliente&&sel.planta)?(DB.clientes[sel.cliente]?.[sel.planta]?.contactos||[]):[],
-    onAdd:v=>{if(sel.cliente&&sel.planta){const p=DB.clientes[sel.cliente][sel.planta];if(!p.contactos)p.contactos=[];p.contactos.push(v);}}});
+    getItems:()=>(sel.cliente&&sel.planta)?DB.clientes[sel.cliente]?.[sel.planta]?.contactos||[]:[],
+    onAdd:v=>{
+      if(sel.cliente&&sel.planta){
+        const p=DB.clientes[sel.cliente][sel.planta];
+        if(!p.contactos)p.contactos=[];
+        p.contactos.push(v);
+        postAPI({action:'agregarMaestro',tipo:'cliente',cliente:sel.cliente,planta:sel.planta,contacto:v});
+      }
+    }
+  });
 }
 
-// ══════════════════════════════════════════════
+// ══════════════════════════
 // EQUIPOS
-// ══════════════════════════════════════════════
+// ══════════════════════════
 function addEquipo(){eqIdx++;const id='e'+eqIdx;eqList.push({id});renderEquipos();}
 function removeEquipo(id){if(eqList.length<=1){alert('Debe haber al menos un equipo.');return;}eqList=eqList.filter(e=>e.id!==id);delete ssMap[id];renderEquipos();}
 function renderEquipos(){
@@ -502,16 +498,30 @@ function renderEquipos(){
     card.appendChild(tr);c.appendChild(card);
     ssMap[eq.id]=new SS('m-'+eq.id,{placeholder:'Seleccionar equipo...',label:'equipo',
       getItems:()=>{if(sel.cliente&&sel.planta)return DB.clientes[sel.cliente]?.[sel.planta]?.equipos||[];const all=new Set();Object.values(DB.clientes).forEach(c=>Object.values(c).forEach(p=>(p.equipos||[]).forEach(e=>all.add(e))));return[...all];},
-      onAdd:v=>{if(sel.cliente&&sel.planta){const p=DB.clientes[sel.cliente][sel.planta];if(!p.equipos)p.equipos=[];p.equipos.push(v);}}});
+      onAdd:v=>{
+        if(sel.cliente&&sel.planta){
+          const p=DB.clientes[sel.cliente][sel.planta];
+          if(!p.equipos)p.equipos=[];
+          p.equipos.push(v);
+          postAPI({action:'agregarMaestro',tipo:'equipo',cliente:sel.cliente,planta:sel.planta,equipo:v});
+        }
+      }
+    });
   });
 }
 function eqData(){
-  return eqList.map((eq,i)=>({num:i+1,nombre:ssMap[eq.id]?.value||'',serie:document.getElementById('s-'+eq.id)?.value||'',ini:document.getElementById('ini-'+eq.id)?.value||'',fin:document.getElementById('fin-'+eq.id)?.value||'',detalle:document.getElementById('det-'+eq.num)?.value||''}));
+  return eqList.map((eq,i)=>({
+    num:i+1, nombre:ssMap[eq.id]?.value||'',
+    serie:document.getElementById('s-'+eq.id)?.value||'',
+    ini:document.getElementById('ini-'+eq.id)?.value||'',
+    fin:document.getElementById('fin-'+eq.id)?.value||'',
+    detalle:document.getElementById('det-'+eq.num)?.value||''
+  }));
 }
 
-// ══════════════════════════════════════════════
+// ══════════════════════════
 // TRABAJO
-// ══════════════════════════════════════════════
+// ══════════════════════════
 function renderTrabajo(){
   const c=document.getElementById('trabajoContainer');c.innerHTML='';
   eqData().forEach(eq=>{
@@ -525,9 +535,9 @@ function renderTrabajo(){
   });
 }
 
-// ══════════════════════════════════════════════
-// FOTOS
-// ══════════════════════════════════════════════
+// ══════════════════════════
+// FOTOS TERRENO
+// ══════════════════════════
 document.getElementById('fotoArea').addEventListener('click',()=>document.getElementById('fotoInput').click());
 document.getElementById('fotoInput').addEventListener('change',function(){
   Array.from(this.files).forEach(f=>{const r=new FileReader();r.onload=e=>{fotos.push(e.target.result);renderFotos();};r.readAsDataURL(f);});this.value='';
@@ -537,9 +547,21 @@ function renderFotos(){
   fotos.forEach((src,i)=>{const d=document.createElement('div');d.className='foto-th';const img=document.createElement('img');img.src=src;const del=document.createElement('button');del.textContent='✕';del.addEventListener('click',()=>{fotos.splice(i,1);renderFotos();});d.append(img,del);g.appendChild(d);});
 }
 
-// ══════════════════════════════════════════════
+// ══════════════════════════
+// FOTOS OFICINA
+// ══════════════════════════
+document.getElementById('of_fotoArea').addEventListener('click',()=>document.getElementById('of_fotoInput').click());
+document.getElementById('of_fotoInput').addEventListener('change',function(){
+  Array.from(this.files).forEach(f=>{const r=new FileReader();r.onload=e=>{of_fotos.push(e.target.result);renderOfFotos();};r.readAsDataURL(f);});this.value='';
+});
+function renderOfFotos(){
+  const g=document.getElementById('of_fotosGrid');g.innerHTML='';
+  of_fotos.forEach((src,i)=>{const d=document.createElement('div');d.className='foto-th';const img=document.createElement('img');img.src=src;const del=document.createElement('button');del.textContent='✕';del.addEventListener('click',()=>{of_fotos.splice(i,1);renderOfFotos();});d.append(img,del);g.appendChild(d);});
+}
+
+// ══════════════════════════
 // FIRMAS
-// ══════════════════════════════════════════════
+// ══════════════════════════
 function initSig(id){
   const cv=document.getElementById(id),ctx=cv.getContext('2d');
   let on=false,lx=0,ly=0;
@@ -556,382 +578,299 @@ document.querySelectorAll('.sig-clr').forEach(btn=>{
 });
 const sigEmpty=id=>!document.getElementById(id).getContext('2d').getImageData(0,0,800,360).data.some(v=>v);
 
-// ══════════════════════════════════════════════
-// PDF HTML RENDERER
-// ══════════════════════════════════════════════
-function buildPDF() {
-  const eqs = eqData();
-  const fecha = document.getElementById('fecha').value;
-  const fechaFmt = fecha ? new Date(fecha+'T12:00:00').toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'}) : '—';
-  const recom = document.getElementById('recom').value.trim();
-  const col = document.getElementById('colacion').value || '0';
-  const trans = document.getElementById('transporte').value || '0';
-
-  // Calcular horas
-  let totalMins = 0;
-  eqs.forEach(eq => {
-    if (eq.ini && eq.fin) {
-      const [ih,im] = eq.ini.split(':').map(Number);
-      const [fh,fm] = eq.fin.split(':').map(Number);
-      totalMins += (fh*60+fm) - (ih*60+im);
-    }
+// ══════════════════════════
+// RESET FORMULARIO
+// ══════════════════════════
+function resetForm(){
+  eqList=[]; fotos=[]; eqIdx=0; actaActual='';
+  sel.cliente=''; sel.planta='';
+  // Limpiar campos de texto
+  ['ref','recom','firmante','colacion','transporte'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){ el.value = id==='colacion'?'0':id==='transporte'?'1':''; }
   });
-  const totalHrs = ((totalMins - parseInt(col)) / 60).toFixed(1);
-
-  // Sección equipos detalle
-  const eqsHTML = eqs.map(eq => `
-    <div class="pdf-eq-hdr">${eq.nombre||'Equipo '+eq.num}${eq.serie?' — '+eq.serie:''}${eq.ini&&eq.fin?' &nbsp;|&nbsp; '+eq.ini+' – '+eq.fin:''}</div>
-    <div class="pdf-detalle">${eq.detalle || '<em style="color:#aaa">Sin detalle registrado.</em>'}</div>
-  `).join('');
-
-  // Fotos
-  const fotosHTML = fotos.length ? `
-    <div class="pdf-section-hdr">3 &nbsp; REGISTRO FOTOGRÁFICO</div>
-    <div class="pdf-fotos-grid">
-      ${fotos.map((src,i) => `
-        <div class="pdf-foto">
-          <img src="${src}">
-          <div class="caption">Figura ${i+1}</div>
-        </div>
-      `).join('')}
-    </div>
-  ` : '';
-
-  // Recomendaciones
-  const recomHTML = recom ? `
-    <div class="pdf-section-hdr">${fotos.length ? '4' : '3'} &nbsp; RECOMENDACIONES</div>
-    <div class="pdf-detalle">${recom}</div>
-  ` : '';
-
-  // Firmas
-  const sigCli = document.getElementById('sigCliente').toDataURL('image/png');
-  const sigTec = document.getElementById('sigTecnico').toDataURL('image/png');
-
-  document.getElementById('pdfDoc').innerHTML = `
-    <div class="pdf-hdr">
-      <div class="pdf-logo-text">
-        <div><span class="pro">PRO</span><span class="apsis">APSIS</span></div>
-        <div class="sub">SOLUCIONES EN AUTOMATIZACIÓN</div>
-      </div>
-      <div class="pdf-acta-box">
-        <div class="lbl">N° ACTA</div>
-        <div class="num">${actaActual}</div>
-      </div>
-    </div>
-
-    <div class="pdf-tipo-bar">REPORTE SERVICIO TÉCNICO &nbsp;—&nbsp; ${document.getElementById('tipo').value}</div>
-
-    <div class="pdf-body">
-
-      <div class="pdf-section-hdr">1 &nbsp; INFORMACIÓN GENERAL</div>
-      <table class="pdf-table">
-        <tr><td class="lbl">Cliente</td><td class="val">${ssMap.cliente?.value||'—'}</td><td class="lbl">Técnico</td><td class="val">${ssMap.tecnico?.value||'—'}</td></tr>
-        <tr><td class="lbl">Planta</td><td class="val">${ssMap.planta?.value||'—'}</td><td class="lbl">Fecha</td><td class="val">${fechaFmt}</td></tr>
-        <tr><td class="lbl">Referencia</td><td class="val" colspan="3">${document.getElementById('ref').value||'—'}</td></tr>
-        <tr><td class="lbl">Solicitado por</td><td class="val">${ssMap.contacto?.value||'—'}</td><td class="lbl">Tipo servicio</td><td class="val">${document.getElementById('tipo').value}</td></tr>
-        <tr><td class="lbl">Tiempo trabajo</td><td class="val">${totalHrs} hrs</td><td class="lbl">Colación</td><td class="val">${col} min</td></tr>
-        <tr><td class="lbl">Transporte</td><td class="val">${trans} hrs</td><td class="lbl">Equipo(s)</td><td class="val">${eqs.map(e=>(e.nombre||'Equipo '+e.num)+(e.serie?' ('+e.serie+')':'')).join(', ')}</td></tr>
-      </table>
-
-      <div class="pdf-section-hdr">2 &nbsp; DETALLE DEL SERVICIO REALIZADO</div>
-      ${eqsHTML}
-
-      ${recomHTML}
-      ${fotosHTML}
-
-      <div class="pdf-firmas">
-        <div class="pdf-firma-box">
-          <div class="flbl">Firma Cliente</div>
-          <img src="${sigCli}">
-          <div class="fname">${document.getElementById('firmante').value||''}</div>
-        </div>
-        <div class="pdf-firma-box">
-          <div class="flbl">Firma Técnico</div>
-          <img src="${sigTec}">
-          <div class="fname">${ssMap.tecnico?.value||''}</div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="pdf-footer">
-      <span>Soluciones en Automatización Industrial — www.proapsis.cl</span>
-      <span>Acta ${actaActual} &nbsp;|&nbsp; ${fechaFmt}</span>
-    </div>
-  `;
+  document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
+  document.getElementById('tipo').selectedIndex=0;
+  // Limpiar firmas
+  ['sigCliente','sigTecnico'].forEach(id=>{const cv=document.getElementById(id);cv.getContext('2d').clearRect(0,0,cv.width,cv.height);cv.classList.remove('ok');});
+  // Limpiar fotos
+  renderFotos();
+  // Reiniciar selects
+  Object.keys(ssMap).forEach(k=>delete ssMap[k]);
+  initSelects();
+  // Reiniciar equipos
+  renderEquipos();
+  addEquipo();
 }
 
-// ══════════════════════════════════════════════
+// ══════════════════════════
 // NAV
-// ══════════════════════════════════════════════
+// ══════════════════════════
 function goTo(n){
   if(n>cur&&!validate(cur))return;
-  document.getElementById('s'+cur).classList.remove('act');cur=n;document.getElementById('s'+n).classList.add('act');
-  if(n===3)renderTrabajo();dots();window.scrollTo(0,0);
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
+  cur=n;
+  document.getElementById('s'+n).classList.add('act');
+  if(n===3)renderTrabajo();
+  dots(); window.scrollTo(0,0);
   document.getElementById('hdrSub').textContent=['','Datos generales','Equipos & tiempos','Trabajo realizado','Firmas'][n];
+  document.getElementById('tabNuevo').classList.add('active');
+  document.getElementById('tabReportes').classList.remove('active');
 }
 function dots(){document.getElementById('dots').innerHTML=[1,2,3,4].map(i=>`<div class="dot ${i<cur?'ok':i===cur?'on':''}"></div>`).join('');}
 function validate(n){
-  if(n===1){if(!ssMap.tecnico?.value){alert('Selecciona un técnico');return false;}if(!ssMap.cliente?.value){alert('Selecciona un cliente');return false;}if(!ssMap.planta?.value){alert('Selecciona una planta');return false;}if(!document.getElementById('ref').value.trim()){alert('Ingresa la referencia');return false;}}
+  if(n===1){
+    if(!ssMap.tecnico?.value){alert('Selecciona un técnico');return false;}
+    if(!ssMap.cliente?.value){alert('Selecciona un cliente');return false;}
+    if(!ssMap.planta?.value){alert('Selecciona una planta');return false;}
+    if(!document.getElementById('ref').value.trim()){alert('Ingresa la referencia');return false;}
+  }
   return true;
 }
 
-// ══════════════════════════════════════════════
-// EVENTOS
-// ══════════════════════════════════════════════
-document.getElementById('btnEnviar').addEventListener('click', async () => {
-  if(!document.getElementById('firmante').value.trim()){alert('Ingresa el nombre de quien firma');return;}
-  if(sigEmpty('sigCliente')){alert('El cliente debe firmar');return;}
-  if(sigEmpty('sigTecnico')){alert('El técnico debe firmar');return;}
+// ══════════════════════════
+// MODO OFICINA
+// ══════════════════════════
+async function goToOficina(){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
+  document.getElementById('s0').classList.add('act');
+  document.getElementById('hdrSub').textContent='Lista de reportes';
+  document.getElementById('dots').innerHTML='';
+  document.getElementById('tabReportes').classList.add('active');
+  document.getElementById('tabNuevo').classList.remove('active');
+  await cargarReportes();
+}
 
-  const btn = document.getElementById('btnEnviar');
-  btn.textContent = 'Guardando...'; btn.disabled = true;
+async function cargarReportes(){
+  const lista=document.getElementById('listaReportes');
+  lista.innerHTML='<div style="text-align:center;padding:32px;color:#aaa">Cargando...</div>';
+  try{
+    const r=await fetch(API+'?action=getReportes');
+    const data=await r.json();
+    if(!data.ok||!data.reportes?.length){lista.innerHTML='<div style="text-align:center;padding:32px;color:#aaa">No hay reportes aún.</div>';return;}
+    const filtrados=filtroActivo?data.reportes.filter(r=>r.estado===filtroActivo):data.reportes;
+    if(!filtrados.length){lista.innerHTML='<div style="text-align:center;padding:32px;color:#aaa">No hay reportes con ese filtro.</div>';return;}
+    lista.innerHTML='';
+    filtrados.reverse().forEach(rep=>{
+      const card=document.createElement('div');card.className='rep-card';
+      const estado=rep.estado||'Borrador';
+      const eClass=estado.includes('Pendiente')?'est-Pendiente':'est-'+estado;
+      card.innerHTML=`<div style="flex:1"><div class="rc-acta">Acta ${rep.acta}</div><div class="rc-sub">${rep.cliente||''} — ${rep.planta||''}</div><div class="rc-sub">${rep.referencia||''} · ${rep.tecnico||''}</div></div><span class="badge ${eClass}">${estado}</span>`;
+      card.addEventListener('click',()=>abrirReporteOficina(rep));
+      lista.appendChild(card);
+    });
+  }catch(e){lista.innerHTML='<div style="text-align:center;padding:32px;color:#aaa">Error de conexión.</div>';}
+}
 
-  try {
-    const payload = {
-      action: 'guardarReporte',
-      fecha: document.getElementById('fecha').value,
-      tipo: document.getElementById('tipo').value,
-      tecnico: ssMap.tecnico?.value || '',
-      cliente: ssMap.cliente?.value || '',
-      planta: ssMap.planta?.value || '',
-      contacto: ssMap.contacto?.value || '',
-      referencia: document.getElementById('ref').value,
-      colacion: document.getElementById('colacion').value,
-      transporte: document.getElementById('transporte').value,
-      recomendaciones: document.getElementById('recom').value,
-      firmante: document.getElementById('firmante').value,
-      equipos: eqData()
-    };
-    const res = await postAPI(payload);
-    actaActual = res.acta || ((530+Math.floor(Math.random()*100))+'-'+String(new Date().getFullYear()).slice(-2));
-  } catch(e) {
-    actaActual = (530+Math.floor(Math.random()*100))+'-'+String(new Date().getFullYear()).slice(-2);
-  }
+async function abrirReporteOficina(rep){
+  reporteActual=rep; of_fotos=[];
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
+  document.getElementById('s_oficina').classList.add('act');
+  document.getElementById('of_acta').textContent='Acta '+rep.acta;
+  document.getElementById('of_info').textContent=(rep.cliente||'')+' — '+(rep.planta||'')+' · '+(rep.tecnico||'');
+  const badge=document.getElementById('of_badge');
+  const estado=rep.estado||'Borrador';
+  badge.className='badge '+(estado.includes('Pendiente')?'est-Pendiente':'est-'+estado);
+  badge.textContent=estado;
+  document.getElementById('of_recom').value='';
+  renderOfFotos();
+  try{
+    const r=await fetch(API+'?action=getReporte&acta='+rep.acta);
+    const data=await r.json();
+    renderOficinaEquipos(data.equipos||[]);
+    if(data.reporte&&data.reporte[10]) document.getElementById('of_recom').value=data.reporte[10];
+  }catch(e){renderOficinaEquipos([]);}
+  renderOficinaAcciones(estado);
+  window.scrollTo(0,0);
+}
 
-  btn.textContent = '✓ Enviar Reporte'; btn.disabled = false;
-  document.getElementById('actaLabel').textContent = 'Acta N° ' + actaActual;
-  document.getElementById('modal').classList.add('open');
+function renderOficinaEquipos(equipos){
+  const c=document.getElementById('of_equipos_wrap');c.innerHTML='';
+  if(!equipos.length){c.innerHTML='<div class="card" style="color:#aaa;font-size:14px">Sin equipos registrados.</div>';return;}
+  equipos.forEach((eq,i)=>{
+    const card=document.createElement('div');card.className='card';
+    const titulo=document.createElement('div');titulo.className='ctitle';
+    titulo.textContent='🔧 '+(eq[2]||'Equipo '+(i+1))+(eq[3]?' — '+eq[3]:'')+(eq[4]&&eq[5]?' ('+eq[4]+' – '+eq[5]+')':'');
+    const l=document.createElement('label');l.style.cssText='display:block;font-size:11px;font-weight:700;color:#777;margin-bottom:4px;text-transform:uppercase';l.textContent='Detalle del trabajo';
+    const ta=document.createElement('textarea');ta.id='of_det_'+(i+1);ta.rows=4;ta.value=eq[7]||'';
+    ta.style.cssText='width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;font-family:inherit;resize:vertical';
+    ta.addEventListener('focus',()=>ta.style.borderColor='var(--or)');ta.addEventListener('blur',()=>ta.style.borderColor='#ddd');
+    const fw=document.createElement('div');fw.className='f';fw.append(l,ta);
+    card.append(titulo,fw);c.appendChild(card);
+  });
+}
+
+function renderOficinaAcciones(estado){
+  const c=document.getElementById('of_acciones');c.innerHTML='';
+  const mk=(cls,txt,fn)=>{const b=document.createElement('button');b.className='btn '+cls;b.textContent=txt;b.addEventListener('click',fn);c.appendChild(b);};
+  mk('btn-or','💾 Guardar cambios',guardarCambiosOficina);
+  if(estado==='Borrador') mk('btn-out','📨 Enviar a aprobación',()=>cambiarEstado('Pendiente'));
+  if(estado==='Pendiente') mk('btn-gn','✅ Aprobar reporte (Admin)',()=>cambiarEstado('Aprobado'));
+  mk('btn-dk','📄 Ver PDF',()=>{buildPDFOficina();document.getElementById('pdfOverlay').style.display='flex';});
+}
+
+async function guardarCambiosOficina(){
+  const equiposEls=document.querySelectorAll('[id^="of_det_"]');
+  const equipos=Array.from(equiposEls).map((el,i)=>({num:i+1,detalle:el.value}));
+  try{
+    await postAPI({action:'actualizarReporte',acta:reporteActual.acta,recomendaciones:document.getElementById('of_recom').value,equipos});
+    alert('✅ Cambios guardados en Google Sheets');
+  }catch(e){alert('Error al guardar. Revisa conexión.');}
+}
+
+async function cambiarEstado(nuevoEstado){
+  try{
+    const action=nuevoEstado==='Aprobado'?'aprobarReporte':'actualizarReporte';
+    await postAPI({action,acta:reporteActual.acta,estado:nuevoEstado});
+    reporteActual.estado=nuevoEstado;
+    const badge=document.getElementById('of_badge');
+    badge.className='badge '+(nuevoEstado.includes('Pendiente')?'est-Pendiente':'est-'+nuevoEstado);
+    badge.textContent=nuevoEstado;
+    renderOficinaAcciones(nuevoEstado);
+    alert('✅ Estado actualizado: '+nuevoEstado);
+  }catch(e){alert('Error al cambiar estado.');}
+}
+
+// Filtros
+document.getElementById('filtroEstado').addEventListener('click',e=>{
+  const btn=e.target.closest('.filtro-btn');if(!btn)return;
+  document.querySelectorAll('.filtro-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); filtroActivo=btn.dataset.estado; cargarReportes();
 });
+
+// ══════════════════════════
+// PDF
+// ══════════════════════════
+function buildPDF(data){
+  const d=data||{
+    acta:actaActual, tipo:document.getElementById('tipo').value,
+    fecha:document.getElementById('fecha').value,
+    cliente:ssMap.cliente?.value||'', planta:ssMap.planta?.value||'',
+    tecnico:ssMap.tecnico?.value||'', contacto:ssMap.contacto?.value||'',
+    referencia:document.getElementById('ref').value,
+    colacion:document.getElementById('colacion').value,
+    transporte:document.getElementById('transporte').value,
+    recom:document.getElementById('recom').value,
+    firmante:document.getElementById('firmante').value,
+    eqs:eqData(), fotosArr:fotos,
+    sigCli:document.getElementById('sigCliente').toDataURL('image/png'),
+    sigTec:document.getElementById('sigTecnico').toDataURL('image/png')
+  };
+  const fechaFmt=d.fecha?new Date(d.fecha+'T12:00:00').toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'}):'—';
+  let totalMins=0;
+  d.eqs.forEach(eq=>{if(eq.ini&&eq.fin){const[ih,im]=eq.ini.split(':').map(Number);const[fh,fm]=eq.fin.split(':').map(Number);totalMins+=(fh*60+fm)-(ih*60+im);}});
+  const totalHrs=((totalMins-parseInt(d.colacion||0))/60).toFixed(1);
+
+  const eqsHTML=d.eqs.map(eq=>`
+    <div class="pdf-eq-hdr">${eq.nombre||'Equipo '+eq.num}${eq.serie?' — '+eq.serie:''}${eq.ini&&eq.fin?' &nbsp;|&nbsp; '+eq.ini+' – '+eq.fin:''}</div>
+    <div class="pdf-detalle">${eq.detalle||'<em style="color:#aaa">Sin detalle registrado.</em>'}</div>
+  `).join('');
+
+  const fotosHTML=d.fotosArr?.length?`
+    <div class="pdf-sec">REGISTRO FOTOGRÁFICO</div>
+    <div class="pdf-fotos-grid">${d.fotosArr.map((src,i)=>`<div class="pdf-foto"><img src="${src}"><div class="cap">Figura ${i+1}</div></div>`).join('')}</div>
+  `:'';
+
+  const recomHTML=d.recom?`<div class="pdf-sec">RECOMENDACIONES</div><div class="pdf-detalle">${d.recom}</div>`:'';
+
+  document.getElementById('pdfDoc').innerHTML=`
+    <div class="pdf-hdr">
+      <div class="pdf-logo-text"><div><span class="pro">PRO</span><span class="apsis">APSIS</span></div><div class="sub">SOLUCIONES EN AUTOMATIZACIÓN</div></div>
+      <div class="pdf-acta-box"><div class="lbl">N° ACTA</div><div class="num">${d.acta}</div></div>
+    </div>
+    <div class="pdf-tipo-bar">REPORTE SERVICIO TÉCNICO — ${d.tipo}</div>
+    <div class="pdf-body">
+      <div class="pdf-sec">1 &nbsp; INFORMACIÓN GENERAL</div>
+      <table class="pdf-table">
+        <tr><td class="lbl">Cliente</td><td>${d.cliente}</td><td class="lbl">Técnico</td><td>${d.tecnico}</td></tr>
+        <tr><td class="lbl">Planta</td><td>${d.planta}</td><td class="lbl">Fecha</td><td>${fechaFmt}</td></tr>
+        <tr><td class="lbl">Referencia</td><td colspan="3">${d.referencia}</td></tr>
+        <tr><td class="lbl">Solicitado por</td><td>${d.contacto}</td><td class="lbl">Tipo</td><td>${d.tipo}</td></tr>
+        <tr><td class="lbl">Tiempo trabajo</td><td>${totalHrs} hrs</td><td class="lbl">Colación</td><td>${d.colacion} min</td></tr>
+        <tr><td class="lbl">Transporte</td><td>${d.transporte} hrs</td><td class="lbl">Equipo(s)</td><td>${d.eqs.map(e=>(e.nombre||'Equipo '+e.num)+(e.serie?' ('+e.serie+')':'')).join(', ')}</td></tr>
+      </table>
+      <div class="pdf-sec">2 &nbsp; DETALLE DEL SERVICIO REALIZADO</div>
+      ${eqsHTML}
+      ${recomHTML}
+      ${fotosHTML}
+      <div class="pdf-firmas">
+        <div class="pdf-firma-box"><div class="flbl">Firma Cliente</div><img src="${d.sigCli}"><div class="fname">${d.firmante}</div></div>
+        <div class="pdf-firma-box"><div class="flbl">Firma Técnico</div><img src="${d.sigTec}"><div class="fname">${d.tecnico}</div></div>
+      </div>
+    </div>
+    <div class="pdf-footer"><span>Soluciones en Automatización Industrial — www.proapsis.cl</span><span>Acta ${d.acta} &nbsp;|&nbsp; ${fechaFmt}</span></div>
+  `;
+}
+
+function buildPDFOficina(){
+  // Para oficina usamos los datos del reporte actual + lo que hay en pantalla
+  const equiposEls=document.querySelectorAll('[id^="of_det_"]');
+  const eqs=Array.from(equiposEls).map((el,i)=>({num:i+1,nombre:'',serie:'',ini:'',fin:'',detalle:el.value}));
+  buildPDF({
+    acta:reporteActual?.acta||'', tipo:reporteActual?.tipo||'',
+    fecha:reporteActual?.fecha||'', cliente:reporteActual?.cliente||'',
+    planta:reporteActual?.planta||'', tecnico:reporteActual?.tecnico||'',
+    contacto:'', referencia:reporteActual?.referencia||'',
+    colacion:'0', transporte:'0',
+    recom:document.getElementById('of_recom').value,
+    firmante:'', eqs, fotosArr:of_fotos,
+    sigCli:'', sigTec:''
+  });
+}
 
 document.getElementById('btnVerPDF').addEventListener('click',()=>{
   document.getElementById('modal').classList.remove('open');
-  buildPDF();
-  document.getElementById('pdfOverlay').style.display='flex';
+  buildPDF(); document.getElementById('pdfOverlay').style.display='flex';
 });
+document.getElementById('btnClosePDF').addEventListener('click',()=>{document.getElementById('pdfOverlay').style.display='none';});
 
-document.getElementById('btnClosePDF').addEventListener('click',()=>{
-  document.getElementById('pdfOverlay').style.display='none';
+// ══════════════════════════
+// SUBMIT TERRENO
+// ══════════════════════════
+document.getElementById('btnEnviar').addEventListener('click',async()=>{
+  if(!document.getElementById('firmante').value.trim()){alert('Ingresa el nombre de quien firma');return;}
+  if(sigEmpty('sigCliente')){alert('El cliente debe firmar');return;}
+  if(sigEmpty('sigTecnico')){alert('El técnico debe firmar');return;}
+  const btn=document.getElementById('btnEnviar');
+  btn.textContent='Guardando...';btn.disabled=true;
+  try{
+    const res=await postAPI({
+      action:'guardarReporte',
+      fecha:document.getElementById('fecha').value,
+      tipo:document.getElementById('tipo').value,
+      tecnico:ssMap.tecnico?.value||'',
+      cliente:ssMap.cliente?.value||'',
+      planta:ssMap.planta?.value||'',
+      contacto:ssMap.contacto?.value||'',
+      referencia:document.getElementById('ref').value,
+      colacion:document.getElementById('colacion').value,
+      transporte:document.getElementById('transporte').value,
+      recomendaciones:document.getElementById('recom').value,
+      firmante:document.getElementById('firmante').value,
+      equipos:eqData()
+    });
+    actaActual=res.acta||(530+Math.floor(Math.random()*100))+'-'+String(new Date().getFullYear()).slice(-2);
+  }catch(e){
+    actaActual=(530+Math.floor(Math.random()*100))+'-'+String(new Date().getFullYear()).slice(-2);
+  }
+  btn.textContent='✓ Enviar Reporte';btn.disabled=false;
+  document.getElementById('actaLabel').textContent='Acta N° '+actaActual;
+  document.getElementById('modal').classList.add('open');
 });
 
 document.getElementById('btnNuevo').addEventListener('click',()=>{
   document.getElementById('modal').classList.remove('open');
-  eqList=[];fotos=[];eqIdx=0;sel.cliente='';sel.planta='';ssMap={};actaActual='';
-  document.querySelectorAll('input[type=text],input[type=number],textarea').forEach(el=>el.value='');
-  document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
-  ['sigCliente','sigTecnico'].forEach(id=>{const cv=document.getElementById(id);cv.getContext('2d').clearRect(0,0,cv.width,cv.height);cv.classList.remove('ok');});
-  renderFotos();initSelects();addEquipo();cur=1;goTo(1);
+  resetForm();
+  cur=1; goTo(1);
 });
 
 document.getElementById('btnAddEq').addEventListener('click',addEquipo);
 
-// ══════════════════════════════════════════════
-// MODO OFICINA
-// ══════════════════════════════════════════════
-let filtroActivo = '';
-let of_fotos = [];
-let reporteActual = null;
-
-async function goToOficina() {
-  // Ocultar todas las screens
-  document.querySelectorAll('.scr').forEach(s => s.classList.remove('act'));
-  document.getElementById('s0').classList.add('act');
-  document.getElementById('hdrSub').textContent = 'Lista de reportes';
-  document.getElementById('dots').innerHTML = '';
-  await cargarReportes();
-}
-
-async function cargarReportes() {
-  const lista = document.getElementById('listaReportes');
-  lista.innerHTML = '<div style="text-align:center;padding:32px;color:#aaa">Cargando...</div>';
-  try {
-    const r = await fetch(API + '?action=getReportes');
-    const data = await r.json();
-    if (!data.ok || !data.reportes.length) {
-      lista.innerHTML = '<div style="text-align:center;padding:32px;color:#aaa">No hay reportes aún.</div>';
-      return;
-    }
-    const filtrados = filtroActivo ? data.reportes.filter(r => r.estado === filtroActivo) : data.reportes;
-    lista.innerHTML = '';
-    filtrados.reverse().forEach(rep => {
-      const card = document.createElement('div');
-      card.className = 'reporte-card';
-      const estadoClass = rep.estado?.includes('Pendiente') ? 'est-Pendiente' : 'est-' + (rep.estado || 'Borrador');
-      card.innerHTML = `
-        <div class="rc-left">
-          <div class="rc-acta">Acta ${rep.acta}</div>
-          <div class="rc-sub">${rep.cliente} — ${rep.planta}</div>
-          <div class="rc-sub">${rep.referencia || ''} · ${rep.tecnico}</div>
-        </div>
-        <span class="estado-badge ${estadoClass}">${rep.estado || 'Borrador'}</span>
-      `;
-      card.addEventListener('click', () => abrirReporteOficina(rep));
-      lista.appendChild(card);
-    });
-  } catch(e) {
-    lista.innerHTML = '<div style="text-align:center;padding:32px;color:#aaa">Error al cargar. Revisa conexión.</div>';
-  }
-}
-
-async function abrirReporteOficina(rep) {
-  reporteActual = rep;
-  of_fotos = [];
-  document.querySelectorAll('.scr').forEach(s => s.classList.remove('act'));
-  document.getElementById('s_oficina').classList.add('act');
-  document.getElementById('of_acta').textContent = 'Acta ' + rep.acta;
-  document.getElementById('of_info').textContent = rep.cliente + ' — ' + rep.planta + ' · ' + rep.tecnico;
-  const badge = document.getElementById('of_badge');
-  const estadoClass = rep.estado?.includes('Pendiente') ? 'est-Pendiente' : 'est-' + (rep.estado || 'Borrador');
-  badge.className = 'estado-badge ' + estadoClass;
-  badge.textContent = rep.estado || 'Borrador';
-  document.getElementById('of_recom').value = '';
-
-  // Cargar detalle de equipos
-  try {
-    const r = await fetch(API + '?action=getReporte&acta=' + rep.acta);
-    const data = await r.json();
-    renderOficinaEquipos(data.equipos || []);
-    if (data.reporte && data.reporte[10]) document.getElementById('of_recom').value = data.reporte[10];
-  } catch(e) {
-    renderOficinaEquipos([]);
-  }
-
-  renderOficinaAcciones(rep.estado);
-  renderOfFotos();
-}
-
-function renderOficinaEquipos(equipos) {
-  const c = document.getElementById('of_equipos_wrap');
-  c.innerHTML = '';
-  if (!equipos.length) {
-    c.innerHTML = '<div class="card" style="color:#aaa;font-size:14px">Sin equipos registrados.</div>';
-    return;
-  }
-  equipos.forEach((eq, i) => {
-    const card = document.createElement('div'); card.className = 'card';
-    const titulo = document.createElement('div'); titulo.className = 'ctitle';
-    titulo.textContent = '🔧 ' + (eq[2] || 'Equipo '+(i+1)) + (eq[3] ? ' — '+eq[3] : '') + (eq[4]&&eq[5] ? '  ('+eq[4]+' – '+eq[5]+')' : '');
-    const lbl = document.createElement('label'); lbl.style.cssText='display:block;font-size:11px;font-weight:700;color:#777;margin-bottom:4px;text-transform:uppercase';
-    lbl.textContent = 'Detalle del trabajo';
-    const ta = document.createElement('textarea'); ta.id = 'of_det_'+(i+1); ta.rows = 4;
-    ta.value = eq[7] || '';
-    ta.style.cssText = 'width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;font-family:inherit;resize:vertical';
-    const fw = document.createElement('div'); fw.className = 'f'; fw.append(lbl, ta);
-    card.append(titulo, fw); c.appendChild(card);
-  });
-}
-
-function renderOficinaAcciones(estado) {
-  const c = document.getElementById('of_acciones');
-  c.innerHTML = '';
-
-  const btnGuardar = document.createElement('button');
-  btnGuardar.className = 'btn btn-or';
-  btnGuardar.textContent = '💾 Guardar cambios';
-  btnGuardar.addEventListener('click', guardarCambiosOficina);
-  c.appendChild(btnGuardar);
-
-  if (estado === 'Borrador') {
-    const btnEnviar = document.createElement('button');
-    btnEnviar.className = 'btn btn-out';
-    btnEnviar.textContent = '📨 Enviar a aprobación';
-    btnEnviar.addEventListener('click', () => cambiarEstado('Pendiente aprobación'));
-    c.appendChild(btnEnviar);
-  }
-
-  if (estado === 'Pendiente aprobación') {
-    const btnAprobar = document.createElement('button');
-    btnAprobar.className = 'btn btn-gn';
-    btnAprobar.textContent = '✅ Aprobar reporte (Admin)';
-    btnAprobar.addEventListener('click', () => cambiarEstado('Aprobado'));
-    c.appendChild(btnAprobar);
-  }
-
-  const btnPDF = document.createElement('button');
-  btnPDF.className = 'btn';
-  btnPDF.style.background = '#333'; btnPDF.style.color = '#fff';
-  btnPDF.textContent = '📄 Ver PDF';
-  btnPDF.addEventListener('click', () => {
-    buildPDFOficina();
-    document.getElementById('pdfOverlay').style.display = 'flex';
-  });
-  c.appendChild(btnPDF);
-}
-
-async function guardarCambiosOficina() {
-  const equiposEls = document.querySelectorAll('[id^="of_det_"]');
-  const equipos = Array.from(equiposEls).map((el, i) => ({ num: i+1, detalle: el.value }));
-  try {
-    await postAPI({
-      action: 'actualizarReporte',
-      acta: reporteActual.acta,
-      recomendaciones: document.getElementById('of_recom').value,
-      equipos
-    });
-    alert('✅ Cambios guardados');
-  } catch(e) { alert('Error al guardar'); }
-}
-
-async function cambiarEstado(nuevoEstado) {
-  try {
-    await postAPI({ action: nuevoEstado === 'Aprobado' ? 'aprobarReporte' : 'actualizarReporte', acta: reporteActual.acta, estado: nuevoEstado });
-    reporteActual.estado = nuevoEstado;
-    const badge = document.getElementById('of_badge');
-    const estadoClass = nuevoEstado.includes('Pendiente') ? 'est-Pendiente' : 'est-' + nuevoEstado;
-    badge.className = 'estado-badge ' + estadoClass;
-    badge.textContent = nuevoEstado;
-    renderOficinaAcciones(nuevoEstado);
-    alert('✅ Estado actualizado: ' + nuevoEstado);
-  } catch(e) { alert('Error al cambiar estado'); }
-}
-
-// Fotos oficina
-document.getElementById('of_fotoArea').addEventListener('click', () => document.getElementById('of_fotoInput').click());
-document.getElementById('of_fotoInput').addEventListener('change', function() {
-  Array.from(this.files).forEach(f => { const r = new FileReader(); r.onload = e => { of_fotos.push(e.target.result); renderOfFotos(); }; r.readAsDataURL(f); });
-  this.value = '';
-});
-function renderOfFotos() {
-  const g = document.getElementById('of_fotosGrid'); g.innerHTML = '';
-  of_fotos.forEach((src, i) => {
-    const d = document.createElement('div'); d.className = 'foto-th';
-    const img = document.createElement('img'); img.src = src;
-    const del = document.createElement('button'); del.textContent = '✕';
-    del.addEventListener('click', () => { of_fotos.splice(i, 1); renderOfFotos(); });
-    d.append(img, del); g.appendChild(d);
-  });
-}
-
-// Filtros
-document.getElementById('filtroEstado').addEventListener('click', e => {
-  const btn = e.target.closest('.filtro-btn');
-  if (!btn) return;
-  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filtroActivo = btn.dataset.estado;
-  cargarReportes();
-});
-
-function buildPDFOficina() {
-  // Reutiliza buildPDF pero con datos del reporte actual
-  buildPDF();
-}
-
-// ══════════════════════════════════════════════
+// ══════════════════════════
 // INIT
-// ══════════════════════════════════════════════
+// ══════════════════════════
 document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
-loadDB().then(() => { initSelects(); addEquipo(); });
+loadDB().then(()=>{initSelects();addEquipo();});
 dots(); initSig('sigCliente'); initSig('sigTecnico');
 </script>
 </body>
