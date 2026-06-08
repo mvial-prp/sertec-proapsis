@@ -935,9 +935,58 @@ document.getElementById('btnAddEq').addEventListener('click',addEquipo);
 // ══════════════════════════
 // INIT
 // ══════════════════════════
-document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
+// ══════════════════════════
+// ROLES
+// ══════════════════════════
+let rolActual = 'tecnico';
+const ADMIN_PASS = 'proapsis2026';
+
+function initRol() {
+  const saved = sessionStorage.getItem('sertec_rol');
+  if (saved) rolActual = saved;
+  updateRolUI();
+}
+
+function updateRolUI() {
+  const btn = document.getElementById('btnRol');
+  if (!btn) return;
+  if (rolActual === 'admin') {
+    btn.textContent = '🔑 Admin';
+    btn.style.color = '#27ae60';
+    btn.style.borderColor = '#27ae60';
+  } else {
+    btn.textContent = '👤 Técnico';
+    btn.style.color = '#555';
+    btn.style.borderColor = '#ddd';
+  }
+}
+
+function toggleRol() {
+  if (rolActual === 'admin') {
+    rolActual = 'tecnico';
+    sessionStorage.setItem('sertec_rol', 'tecnico');
+    updateRolUI();
+    alert('Modo técnico activado');
+    return;
+  }
+  const pass = prompt('Contraseña de administrador:');
+  if (pass === null) return;
+  if (pass === ADMIN_PASS) {
+    rolActual = 'admin';
+    sessionStorage.setItem('sertec_rol', 'admin');
+    updateRolUI();
+    alert('✅ Modo administrador activado');
+  } else {
+    alert('Contraseña incorrecta');
+  }
+}
+
+// ══════════════════════════
+// INIT
+// ══════════════════════════
+document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
 initRol();
-loadDB().then(()=>{initSelects();addEquipo();});
+loadDB().then(() => { initSelects(); addEquipo(); });
 dots(); initSig('sigCliente'); initSig('sigTecnico');
 </script>
 </body>
