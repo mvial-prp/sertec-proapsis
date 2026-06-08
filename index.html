@@ -166,6 +166,7 @@ canvas.sig.ok { border-color: var(--gn); }
     <button class="hdr-tab" id="tabReportes" onclick="goToOficina()">📋 Reportes</button>
     <button class="hdr-tab active" id="tabNuevo" onclick="goTo(1)">➕ Nuevo</button>
   </div>
+  <button id="btnRol" onclick="toggleRol()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#aaa;margin-left:8px;white-space:nowrap">👤 Técnico</button>
   <div class="dots" id="dots"></div>
 </div>
 
@@ -694,13 +695,43 @@ async function abrirReporteOficina(rep){
   window.scrollTo(0,0);
 }
 
+function fmtTime(val){
+  // Sheets puede devolver tiempo como fecha ISO o como string HH:MM
+  if(!val) return '';
+  if(typeof val === 'string' && val.includes('T')){
+    // Es fecha ISO — extraer HH:MM
+    const d = new Date(val);
+    return d.getUTCHours().toString().padStart(2,'0')+':'+d.getUTCMinutes().toString().padStart(2,'0');
+  }
+  return String(val).slice(0,5);
+}
+
 function renderOficinaEquipos(equipos){
   const c=document.getElementById('of_equipos_wrap');c.innerHTML='';
-  if(!equipos.length){c.innerHTML='<div class="card" style="color:#aaa;font-size:14px">Sin equipos registrados.</div>';return;}
+
+  // Cabecera del reporte en modo lectura
+  if(reporteActual){
+    const info=document.createElement('div');info.className='card';
+    info.style.background='#f9f9f9';
+    info.innerHTML=`
+      <div class="ctitle">📋 Datos del reporte</div>
+      <table style="width:100%;font-size:13px;border-collapse:collapse">
+        <tr><td style="color:#888;font-weight:700;padding:4px 6px;width:40%">Referencia</td><td style="padding:4px 6px">${reporteActual.referencia||'—'}</td></tr>
+        <tr style="background:#f0f0f0"><td style="color:#888;font-weight:700;padding:4px 6px">Cliente</td><td style="padding:4px 6px">${reporteActual.cliente||'—'} — ${reporteActual.planta||'—'}</td></tr>
+        <tr><td style="color:#888;font-weight:700;padding:4px 6px">Técnico</td><td style="padding:4px 6px">${reporteActual.tecnico||'—'}</td></tr>
+        <tr style="background:#f0f0f0"><td style="color:#888;font-weight:700;padding:4px 6px">Fecha</td><td style="padding:4px 6px">${reporteActual.fecha?new Date(reporteActual.fecha).toLocaleDateString('es-CL'):'—'}</td></tr>
+      </table>
+    `;
+    c.appendChild(info);
+  }
+
+  if(!equipos.length){c.innerHTML+='<div class="card" style="color:#aaa;font-size:14px">Sin equipos registrados.</div>';return;}
   equipos.forEach((eq,i)=>{
+    const ini=fmtTime(eq[4]);
+    const fin=fmtTime(eq[5]);
     const card=document.createElement('div');card.className='card';
     const titulo=document.createElement('div');titulo.className='ctitle';
-    titulo.textContent='🔧 '+(eq[2]||'Equipo '+(i+1))+(eq[3]?' — '+eq[3]:'')+(eq[4]&&eq[5]?' ('+eq[4]+' – '+eq[5]+')':'');
+    titulo.textContent='🔧 '+(eq[2]||'Equipo '+(i+1))+(eq[3]?' — '+eq[3]:'')+(ini&&fin?' ('+ini+' – '+fin+')':'');
     const l=document.createElement('label');l.style.cssText='display:block;font-size:11px;font-weight:700;color:#777;margin-bottom:4px;text-transform:uppercase';l.textContent='Detalle del trabajo';
     const ta=document.createElement('textarea');ta.id='of_det_'+(i+1);ta.rows=4;ta.value=eq[7]||'';
     ta.style.cssText='width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;font-family:inherit;resize:vertical';
@@ -713,17 +744,41 @@ function renderOficinaEquipos(equipos){
 function renderOficinaAcciones(estado){
   const c=document.getElementById('of_acciones');c.innerHTML='';
   const mk=(cls,txt,fn)=>{const b=document.createElement('button');b.className='btn '+cls;b.textContent=txt;b.addEventListener('click',fn);c.appendChild(b);};
+
+  // Guardar siempre disponible
   mk('btn-or','💾 Guardar cambios',guardarCambiosOficina);
-  if(estado==='Borrador') mk('btn-out','📨 Enviar a aprobación',()=>cambiarEstado('Pendiente'));
-  if(estado==='Pendiente') mk('btn-gn','✅ Aprobar reporte (Admin)',()=>cambiarEstado('Aprobado'));
+
+  // Técnico puede enviar a aprobación si está en Borrador
+  if(estado==='Borrador' && rolActual==='tecnico'){
+    mk('btn-out','📨 Enviar a aprobación',()=>cambiarEstado('Pendiente'));
+  }
+
+  // Admin puede aprobar si está Pendiente
+  if(estado==='Pendiente' && rolActual==='admin'){
+    mk('btn-gn','✅ Aprobar reporte',()=>cambiarEstado('Aprobado'));
+  }
+
+  // Admin puede rechazar y devolver a borrador
+  if(estado==='Pendiente' && rolActual==='admin'){
+    mk('btn-out','↩️ Devolver a técnico',()=>cambiarEstado('Borrador'));
+  }
+
   mk('btn-dk','📄 Ver PDF',()=>{buildPDFOficina();document.getElementById('pdfOverlay').style.display='flex';});
 }
 
 async function guardarCambiosOficina(){
   const equiposEls=document.querySelectorAll('[id^="of_det_"]');
   const equipos=Array.from(equiposEls).map((el,i)=>({num:i+1,detalle:el.value}));
+  const recom=document.getElementById('of_recom').value;
   try{
-    await postAPI({action:'actualizarReporte',acta:reporteActual.acta,recomendaciones:document.getElementById('of_recom').value,equipos});
+    await postAPI({
+      action:'actualizarReporte',
+      acta:String(reporteActual.acta),
+      recomendaciones:recom,
+      equipos
+    });
+    // Actualizar estado local del reporte
+    reporteActual.recomendaciones=recom;
     alert('✅ Cambios guardados en Google Sheets');
   }catch(e){alert('Error al guardar. Revisa conexión.');}
 }
@@ -880,6 +935,7 @@ document.getElementById('btnAddEq').addEventListener('click',addEquipo);
 // INIT
 // ══════════════════════════
 document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
+initRol();
 loadDB().then(()=>{initSelects();addEquipo();});
 dots(); initSig('sigCliente'); initSig('sigTecnico');
 </script>
