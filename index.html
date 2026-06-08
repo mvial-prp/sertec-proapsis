@@ -309,6 +309,20 @@ canvas.sig.ok { border-color: var(--gn); }
   <div id="of_acciones" style="padding-bottom:28px;display:flex;flex-direction:column;gap:10px;margin-top:8px"></div>
 </div>
 
+<!-- MODAL ADMIN -->
+<div class="modal" id="modalAdmin">
+  <div class="mbox">
+    <div class="mico">🔑</div>
+    <div class="mtit">Modo Administrador</div>
+    <div style="font-size:14px;color:#888;margin-bottom:16px">Ingresa la contraseña para activar el modo admin</div>
+    <input type="password" id="adminPassInput" placeholder="Contraseña..." style="width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;margin-bottom:12px">
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-out" onclick="document.getElementById('modalAdmin').classList.remove('open');document.getElementById('adminPassInput').value=''">Cancelar</button>
+      <button class="btn btn-or" onclick="confirmarAdmin()">Entrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal" id="modal">
   <div class="mbox">
@@ -550,24 +564,68 @@ function renderTrabajo(){
 // FOTOS TERRENO
 // ══════════════════════════
 document.getElementById('fotoArea').addEventListener('click',()=>document.getElementById('fotoInput').click());
-document.getElementById('fotoInput').addEventListener('change',function(){
-  Array.from(this.files).forEach(f=>{const r=new FileReader();r.onload=e=>{fotos.push(e.target.result);renderFotos();};r.readAsDataURL(f);});this.value='';
+document.getElementById('fotoInput').addEventListener('change', async function(){
+  const files = Array.from(this.files);
+  for(const f of files){
+    const reader = new FileReader();
+    const base64 = await new Promise(res => { reader.onload = e => res(e.target.result); reader.readAsDataURL(f); });
+    // Mostrar preview inmediato
+    const idx = fotos.length;
+    fotos.push({ src: base64, url: null, nombre: f.name, subiendo: true });
+    renderFotos();
+    // Subir a Drive
+    try {
+      const res = await postAPI({ action:'subirFoto', acta: actaActual||'borrador', foto: base64, nombre: f.name });
+      if(res.ok){ fotos[idx].url = res.url; fotos[idx].subiendo = false; }
+    } catch(e){ fotos[idx].subiendo = false; }
+    renderFotos();
+  }
+  this.value='';
 });
+
 function renderFotos(){
-  const g=document.getElementById('fotosGrid');g.innerHTML='';
-  fotos.forEach((src,i)=>{const d=document.createElement('div');d.className='foto-th';const img=document.createElement('img');img.src=src;const del=document.createElement('button');del.textContent='✕';del.addEventListener('click',()=>{fotos.splice(i,1);renderFotos();});d.append(img,del);g.appendChild(d);});
+  const g=document.getElementById('fotosGrid'); g.innerHTML='';
+  fotos.forEach((f,i)=>{
+    const d=document.createElement('div'); d.className='foto-th';
+    const img=document.createElement('img'); img.src=f.src;
+    if(f.subiendo){ const spin=document.createElement('div'); spin.style.cssText='position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px'; spin.textContent='Subiendo...'; d.appendChild(spin); }
+    const del=document.createElement('button'); del.textContent='✕';
+    del.addEventListener('click',()=>{ fotos.splice(i,1); renderFotos(); });
+    d.append(img,del); g.appendChild(d);
+  });
 }
 
 // ══════════════════════════
 // FOTOS OFICINA
 // ══════════════════════════
 document.getElementById('of_fotoArea').addEventListener('click',()=>document.getElementById('of_fotoInput').click());
-document.getElementById('of_fotoInput').addEventListener('change',function(){
-  Array.from(this.files).forEach(f=>{const r=new FileReader();r.onload=e=>{of_fotos.push(e.target.result);renderOfFotos();};r.readAsDataURL(f);});this.value='';
+document.getElementById('of_fotoInput').addEventListener('change', async function(){
+  const files = Array.from(this.files);
+  for(const f of files){
+    const reader = new FileReader();
+    const base64 = await new Promise(res => { reader.onload = e => res(e.target.result); reader.readAsDataURL(f); });
+    const idx = of_fotos.length;
+    of_fotos.push({ src: base64, url: null, nombre: f.name, subiendo: true });
+    renderOfFotos();
+    try {
+      const res = await postAPI({ action:'subirFoto', acta: reporteActual?.acta||'borrador', foto: base64, nombre: f.name });
+      if(res.ok){ of_fotos[idx].url = res.url; of_fotos[idx].subiendo = false; }
+    } catch(e){ of_fotos[idx].subiendo = false; }
+    renderOfFotos();
+  }
+  this.value='';
 });
+
 function renderOfFotos(){
-  const g=document.getElementById('of_fotosGrid');g.innerHTML='';
-  of_fotos.forEach((src,i)=>{const d=document.createElement('div');d.className='foto-th';const img=document.createElement('img');img.src=src;const del=document.createElement('button');del.textContent='✕';del.addEventListener('click',()=>{of_fotos.splice(i,1);renderOfFotos();});d.append(img,del);g.appendChild(d);});
+  const g=document.getElementById('of_fotosGrid'); g.innerHTML='';
+  of_fotos.forEach((f,i)=>{
+    const d=document.createElement('div'); d.className='foto-th';
+    const img=document.createElement('img'); img.src=f.src;
+    if(f.subiendo){ const spin=document.createElement('div'); spin.style.cssText='position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px'; spin.textContent='Subiendo...'; d.appendChild(spin); }
+    const del=document.createElement('button'); del.textContent='✕';
+    del.addEventListener('click',()=>{ of_fotos.splice(i,1); renderOfFotos(); });
+    d.append(img,del); g.appendChild(d);
+  });
 }
 
 // ══════════════════════════
@@ -832,11 +890,14 @@ function buildPDF(data){
     <div class="pdf-detalle">${eq.detalle||'<em style="color:#aaa">Sin detalle registrado.</em>'}</div>
   `).join('');
 
-  const fotosHTML=d.fotosArr?.length?`
+  const fotosArr = d.fotosArr || [];
+  const fotosHTML = fotosArr.length ? `
     <div class="pdf-sec">REGISTRO FOTOGRÁFICO</div>
-    <div class="pdf-fotos-grid">${d.fotosArr.map((src,i)=>`<div class="pdf-foto"><img src="${src}"><div class="cap">Figura ${i+1}</div></div>`).join('')}</div>
-  `:'';
-
+    <div class="pdf-fotos-grid">${fotosArr.map((f,i) => {
+      const src = f.url || f.src || f;
+      return `<div class="pdf-foto"><img src="${src}" onerror="this.src=''" crossorigin="anonymous"><div class="cap">Figura ${i+1}</div></div>`;
+    }).join('')}</div>
+  ` : '';
   const recomHTML=d.recom?`<div class="pdf-sec">RECOMENDACIONES</div><div class="pdf-detalle">${d.recom}</div>`:'';
 
   document.getElementById('pdfDoc').innerHTML=`
@@ -966,16 +1027,21 @@ function toggleRol() {
     rolActual = 'tecnico';
     sessionStorage.setItem('sertec_rol', 'tecnico');
     updateRolUI();
-    alert('Modo técnico activado');
     return;
   }
-  const pass = prompt('Contraseña de administrador:');
-  if (pass === null) return;
+  // Mostrar modal con input de contraseña
+  document.getElementById('modalAdmin').classList.add('open');
+  setTimeout(() => document.getElementById('adminPassInput').focus(), 100);
+}
+
+function confirmarAdmin() {
+  const pass = document.getElementById('adminPassInput').value;
+  document.getElementById('modalAdmin').classList.remove('open');
+  document.getElementById('adminPassInput').value = '';
   if (pass === ADMIN_PASS) {
     rolActual = 'admin';
     sessionStorage.setItem('sertec_rol', 'admin');
     updateRolUI();
-    alert('✅ Modo administrador activado');
   } else {
     alert('Contraseña incorrecta');
   }
